@@ -33,10 +33,8 @@ class Leitura(models.Model):
         if self.leitura_atual <= leitura_anterior:
             raise ValidationError('Leitura atual menor que a anterior')
 
-        leitura_diferenca = self.leitura_atual - leitura_anterior
-        self.leitura_diferenca = leitura_diferenca
-        return
-    
+        self.leitura_diferenca = self.leitura_atual - leitura_anterior
+        
     def __str__(self):
         return str(self.leitura_atual)
 
