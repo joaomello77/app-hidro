@@ -1,0 +1,40 @@
+### Directory e Files
+
+*.pyc
+*~
+__pycache__
+
+db.sqlite3
+db.sqlite3-journal
+
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+**/staticfiles/**
+!**/staticfiles
+
+**/media/**
+!**/media
+
+
+### Environments
+
+.venv
+venv/
+venv.bak/
+
+
+### GNU/Linux ###
+
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
