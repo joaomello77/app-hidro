@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models import Sum
+from django.core.exceptions import ValidationError
 
 
 class Cliente(models.Model):
@@ -27,9 +28,14 @@ class Leitura(models.Model):
     leitura_diferenca = models.IntegerField(null=True, blank=True, editable=False)
 
     def clean(self):
-        leitura_diferenca = self.leitura_atual - int(str(Leitura.objects.filter(hidrometro=self.hidrometro).latest('leitura_atual')))
+        leitura_anterior = int(str(Leitura.objects.filter(hidrometro=self.hidrometro).latest('leitura_atual')))
+        
+        if self.leitura_atual <= leitura_anterior:
+            raise ValidationError('Leitura atual menor que a anterior')
+
+        leitura_diferenca = self.leitura_atual - leitura_anterior
         self.leitura_diferenca = leitura_diferenca
-        return super().clean()
+        return
     
     def __str__(self):
         return str(self.leitura_atual)
