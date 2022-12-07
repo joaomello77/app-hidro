@@ -16,7 +16,7 @@ class Hidrometro(models.Model):
 
     @property
     def leitura_balanco(self): 
-        return str(Leitura.objects.filter(hidrometro=self.id).aggregate(total=Sum('leitura_atual'))['total'])
+        return str(Leitura.objects.filter(hidrometro=self.id).aggregate(total=Sum('leitura_diferenca'))['total'])
     
     def __str__(self):
         return self.identificacao
