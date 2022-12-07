@@ -28,8 +28,14 @@ class Leitura(models.Model):
     leitura_diferenca = models.IntegerField(null=True, blank=True, editable=False)
 
     def clean(self):
-        leitura_anterior = int(str(Leitura.objects.filter(hidrometro=self.hidrometro).latest('leitura_atual')))
-        
+        # Resolve o problema de zero existencia de uma Leitura referente ao um Hidrometro
+        if Leitura.objects.filter(hidrometro=self.hidrometro).exists() == False:
+            leitura_anterior = 0
+        else:
+            # Traz a ultima leitura realizada.
+            leitura_anterior = int(str(Leitura.objects.filter(hidrometro=self.hidrometro).latest('leitura_atual')))
+
+        # Valida o valor atual
         if self.leitura_atual <= leitura_anterior:
             raise ValidationError('Leitura atual menor que a anterior')
 
